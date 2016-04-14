@@ -1,6 +1,11 @@
 package Usefull;
 import java.util.ArrayList;
+import java.util.Vector;
+import java.util.function.Function;
 import java.util.List;
+
+import org.apache.commons.math.FunctionEvaluationException;
+import org.apache.commons.math.analysis.polynomials.PolynomialFunctionLagrangeForm;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -15,7 +20,10 @@ public class Plot extends Pane {
     
 	private Expression e;
 	private Axes axes;
-	private List<Function> functions;
+	private List<FunctionG> functions;
+	public Vector<Double> xCoordinate;
+    public Vector<Double> yCoordinate;
+	
 	public Axes getAxes() {
 		return axes;
 	}
@@ -23,21 +31,23 @@ public class Plot extends Pane {
 	public void setAxes(Axes axes) {
 		this.axes = axes;
 		this.getChildren().setAll(axes);
-		for(Function f:functions)
+		for(FunctionG f:functions)
 		{
 			drawPath(f.getFunction(),0.01,f.getColor(),f.getStroke());
 		}
 	}
 
 	public Plot(Axes axes){
-		this.functions=new ArrayList<Function>();
+		this.functions=new ArrayList<FunctionG>();
 		this.axes=axes;
 		getChildren().setAll(axes);
+		xCoordinate= new Vector<Double>();
+        yCoordinate= new Vector<Double>();
 	}
 	
 	public void addFunction(String f,String color, int stroke)
 	{
-		functions.add(new Function(f,color,stroke));	
+		functions.add(new FunctionG(f,color,stroke));	
 		drawPath(f,0.01,color,stroke);
 	}
 	
@@ -48,6 +58,7 @@ public class Plot extends Pane {
 	{
 		e = new ExpressionBuilder(f).variables("x").build();
 		
+			
         Path path = new Path();
         //path.setStroke(Color.Double.parseDouble(color));
         Color c=Color.web(color);
@@ -95,9 +106,6 @@ public class Plot extends Pane {
         getChildren().add(path);
 	}
 	
-		
-    
-
     private double mapX(double x, Axes axes) {
         double tx = axes.getPrefWidth() / 2;
         double sx = axes.getPrefWidth() / 
@@ -115,4 +123,5 @@ public class Plot extends Pane {
 
         return -y * sy + ty;
     }
+
 }
