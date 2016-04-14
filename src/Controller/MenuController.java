@@ -4,16 +4,16 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import Usefull.Plot;
 import View.MainWindow;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.WritableImage;
 import javafx.stage.FileChooser;
-import javafx.stage.Window;
 
 public class MenuController {
 
 	private MainWindow window;
-
+	private Plot plot;
 	public void saveButtonPressed()
 	{
 		System.out.println("ai apasat save!");
@@ -33,9 +33,13 @@ public class MenuController {
         
 	}
 	
-	public void drawButtonPressed()
+	public void drawButtonPressed(String f, String color)
 	{
 		System.out.println("ai apasat draw!");
+		System.out.println("F(x)="+f);
+		System.out.println("color="+color);
+		
+		plot.drawPath(f, -8,8,0.1);
 	}
 	
 	public void resetButtonPressed()
@@ -48,9 +52,10 @@ public class MenuController {
 	}
 	
 	
-	public MenuController(MainWindow window)
+	public MenuController(MainWindow window,Plot plot)
 	{
 		this.window = window;
+		this.plot=plot;
 	}
 	
 	public void setWindow(MainWindow window) {

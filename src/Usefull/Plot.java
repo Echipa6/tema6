@@ -13,15 +13,24 @@ import net.objecthunter.exp4j.ExpressionBuilder;
 public class Plot extends Pane {
     
 	private Expression e;
+	private Axes axes;
 	
-	public Plot(
-            String f,
-            double xMin, double xMax, double xInc,
-            Axes axes
-    ) {
-		e = new ExpressionBuilder(f)
-		        .variables("x")
-		        .build();
+	public Axes getAxes() {
+		return axes;
+	}
+
+	public void setAxes(Axes axes) {
+		this.axes = axes;
+	}
+
+	public Plot(Axes axes){
+		this.axes=axes;
+		getChildren().setAll(axes);
+	}
+	
+	public void drawPath(String f,double xMin, double xMax, double xInc)
+	{
+		e = new ExpressionBuilder(f).variables("x").build();
 		
 		
         Path path = new Path();
@@ -65,8 +74,11 @@ public class Plot extends Pane {
         setPrefSize(axes.getPrefWidth(), axes.getPrefHeight());
         setMaxSize(Pane.USE_PREF_SIZE, Pane.USE_PREF_SIZE);
 
-        getChildren().setAll(axes, path);
-    }
+        getChildren().add(path);
+	}
+	
+		
+    
 
     private double mapX(double x, Axes axes) {
         double tx = axes.getPrefWidth() / 2;

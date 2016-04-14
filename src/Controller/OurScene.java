@@ -33,14 +33,11 @@ public class OurScene {
                 -6, 6, 1
         );
 
-        Plot plot = new Plot(
-                "x",
-                -8, 8, 0.1,
-                axes
-        );
+		Plot plot=new Plot(axes);
+		//plot.drawPath("x", -8, 8, 0.1);
         
         MainWindow mainWindow= new MainWindow(plot,topMenu.getHbox());
-        MenuController menuController= new MenuController(mainWindow);
+        MenuController menuController= new MenuController(mainWindow,plot);
         topMenu.setMyMenu(menuController);
         
         scene=new Scene(mainWindow.getRoot(), Color.rgb(35, 39, 50));

@@ -26,7 +26,7 @@ public class TopMenu {
 	public void setMyMenu(MenuController myMenu) {
 		this.myMenu = myMenu;
 		buttonDraw.setOnAction(e -> {
-			myMenu.drawButtonPressed();
+			myMenu.drawButtonPressed(functionField.getText(),colorPicker1.getValue().toString());
 			System.out.println(functionField.getText());
 			System.out.println(colorPicker1.getValue());
 		});
