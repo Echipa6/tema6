@@ -7,23 +7,44 @@ import javafx.scene.layout.Pane;
 public class Axes extends Pane {
     private NumberAxis xAxis;
     private NumberAxis yAxis;
+    private double xMin;
+	public double getxMin() {
+		return xMin;
+	}
 
-    public Axes(
-            int width, int height,
-            double xLow, double xHi, double xTickUnit,
-            double yLow, double yHi, double yTickUnit
+	public double getxMax() {
+		return xMax;
+	}
+
+	public double getyMin() {
+		return yMin;
+	}
+
+	public double getyMax() {
+		return yMax;
+	}
+
+	private double xMax;
+	private double yMin;
+	private double yMax;
+    public Axes(int width, int height,double xTickUnit, double yTickUnit
     ) {
+    	
+    	xMin=-width/100;
+    	xMax=width/100;
+    	yMin=-height/30;
+    	yMax=height/30;
         setMinSize(Pane.USE_PREF_SIZE, Pane.USE_PREF_SIZE);
         setPrefSize(width, height);
         setMaxSize(Pane.USE_PREF_SIZE, Pane.USE_PREF_SIZE);
 
-        xAxis = new NumberAxis(xLow, xHi, xTickUnit);
+        xAxis = new NumberAxis(xMin, xMax, xTickUnit);
         xAxis.setSide(Side.BOTTOM);
         xAxis.setMinorTickVisible(false);
         xAxis.setPrefWidth(width);
         xAxis.setLayoutY(height / 2);
 
-        yAxis = new NumberAxis(yLow, yHi, yTickUnit);
+        yAxis = new NumberAxis(yMin, yMax, yTickUnit);
         yAxis.setSide(Side.LEFT);
         yAxis.setMinorTickVisible(false);
         yAxis.setPrefHeight(height);

@@ -39,13 +39,14 @@ public class MenuController {
 		System.out.println("F(x)="+f);
 		System.out.println("color="+color);
 		
-		plot.drawPath(f, -8,8,0.1,color,stroke);
+		plot.addFunction(f, color, stroke);
 	}
 	
 	public void resetButtonPressed()
 	{
 		System.out.println("ai apasat reset!");
 		plot.getChildren().setAll(plot.getAxes());
+		plot.clearFunctions();
 	}
 	public void loadButtonPressed()
 	{

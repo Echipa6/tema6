@@ -1,5 +1,6 @@
 package Usefull;
-import java.util.function.Function;
+import java.util.ArrayList;
+import java.util.List;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -14,24 +15,38 @@ public class Plot extends Pane {
     
 	private Expression e;
 	private Axes axes;
-	
+	private List<Function> functions;
 	public Axes getAxes() {
 		return axes;
 	}
 
 	public void setAxes(Axes axes) {
 		this.axes = axes;
+		this.getChildren().setAll(axes);
+		for(Function f:functions)
+		{
+			drawPath(f.getFunction(),0.01,f.getColor(),f.getStroke());
+		}
 	}
 
 	public Plot(Axes axes){
+		this.functions=new ArrayList<Function>();
 		this.axes=axes;
 		getChildren().setAll(axes);
 	}
 	
-	public void drawPath(String f,double xMin, double xMax, double xInc,String color, int stroke)
+	public void addFunction(String f,String color, int stroke)
+	{
+		functions.add(new Function(f,color,stroke));	
+		drawPath(f,0.01,color,stroke);
+	}
+	
+	public void clearFunctions(){
+		functions.clear();
+	}
+	public void drawPath(String f, double xInc,String color, int stroke)
 	{
 		e = new ExpressionBuilder(f).variables("x").build();
-		
 		
         Path path = new Path();
         //path.setStroke(Color.Double.parseDouble(color));
@@ -48,7 +63,7 @@ public class Plot extends Pane {
                 )
         );
 
-        double x = xMin;
+        double x = axes.getxMin();
         e.setVariable("x",x);
         double y = e.evaluate();
 
@@ -59,7 +74,7 @@ public class Plot extends Pane {
         );
 
         x += xInc;
-        while (x < xMax) {
+        while (x < axes.getxMax()) {
         	e.setVariable("x",x);
             y = e.evaluate();
             
@@ -73,9 +88,9 @@ public class Plot extends Pane {
             x += xInc;
         }
 
-        setMinSize(Pane.USE_PREF_SIZE, Pane.USE_PREF_SIZE);
-        setPrefSize(axes.getPrefWidth(), axes.getPrefHeight());
-        setMaxSize(Pane.USE_PREF_SIZE, Pane.USE_PREF_SIZE);
+       // setMinSize(Pane.USE_PREF_SIZE, Pane.USE_PREF_SIZE);
+       // setPrefSize(axes.getPrefWidth(), axes.getPrefHeight());
+       // setMaxSize(Pane.USE_PREF_SIZE, Pane.USE_PREF_SIZE);
 
         getChildren().add(path);
 	}
