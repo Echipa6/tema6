@@ -4,6 +4,7 @@ import Controller.MenuController;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -23,6 +24,8 @@ public class TopMenu {
 	private Button buttonSave;
 	private Button buttonLoad;
 	
+	private ComboBox<Integer> stroke;
+	
 	public void setMyMenu(MenuController myMenu) {
 		this.myMenu = myMenu;
 		buttonDraw.setOnAction(e -> {
@@ -34,6 +37,10 @@ public class TopMenu {
 		buttonReset.setOnAction(e -> { myMenu.resetButtonPressed();});
 		buttonSave.setOnAction(e -> { myMenu.saveButtonPressed();});
 		buttonLoad.setOnAction(e -> { myMenu.loadButtonPressed();});
+		
+		stroke.setOnAction(ev -> {
+			myMenu.strokePressed(stroke.getSelectionModel().getSelectedItem().intValue());
+		});
 	}
 	public MenuController getMyMenu() {
 		return myMenu;
@@ -81,8 +88,13 @@ public class TopMenu {
 		buttonLoad = new Button("Load");
 		buttonLoad.setPrefSize(60, 20);
 		
+		stroke= new ComboBox<Integer>();
+		stroke.getItems().addAll(1,2,3,4,5);
+		stroke.setPromptText("Stroke");
+		
 
-		hbox.getChildren().addAll(labelFnct, functionField, colorPicker1, buttonDraw, buttonReset, buttonSave, buttonLoad);
+
+		hbox.getChildren().addAll(labelFnct, functionField, colorPicker1,stroke ,buttonDraw, buttonReset, buttonSave, buttonLoad);
 	}
 
 }

@@ -76,4 +76,8 @@ public class MenuController {
             e.printStackTrace();  
         }  
     }  
+	public void strokePressed(int strokeValue)
+	{
+		System.out.println("ai apasat stroke! " + strokeValue);
+	}
 }

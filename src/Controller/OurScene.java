@@ -37,6 +37,7 @@ public class OurScene {
 		//plot.drawPath("x", -8, 8, 0.1);
         
         MainWindow mainWindow= new MainWindow(plot,topMenu.getHbox());
+        MenuController menuController= new MenuController(mainWindow);
         MenuController menuController= new MenuController(mainWindow,plot);
         topMenu.setMyMenu(menuController);
         
