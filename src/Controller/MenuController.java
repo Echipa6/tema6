@@ -48,9 +48,9 @@ public class MenuController {
 	}
 	
 	
-	public MenuController()
+	public MenuController(MainWindow window)
 	{
-		
+		this.window = window;
 	}
 	
 	public void setWindow(MainWindow window) {
