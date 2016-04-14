@@ -1,9 +1,10 @@
+package Usefull;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Side;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.layout.Pane;
 
-class Axes extends Pane {
+public class Axes extends Pane {
     private NumberAxis xAxis;
     private NumberAxis yAxis;
 

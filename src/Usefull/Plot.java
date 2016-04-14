@@ -1,3 +1,4 @@
+package Usefull;
 import java.util.function.Function;
 
 import javafx.scene.layout.Pane;
@@ -9,7 +10,7 @@ import javafx.scene.shape.Rectangle;
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
 
-class Plot extends Pane {
+public class Plot extends Pane {
     
 	private Expression e;
 	

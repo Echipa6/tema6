@@ -1,3 +1,8 @@
+package Controller;
+import Usefull.Axes;
+import Usefull.Plot;
+import View.MainWindow;
+import View.TopMenu;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -8,7 +13,6 @@ import javafx.scene.paint.Color;
 
 public class OurScene {
 	private Scene scene;
-	private Menu meniu;
 	public Scene getScene() {
 		return scene;
 	}
@@ -18,8 +22,11 @@ public class OurScene {
 	}
 	
 
-	OurScene()
+	public OurScene()
 	{
+		TopMenu topMenu= new TopMenu();
+		
+		
 		Axes axes = new Axes(
                 600, 500,
                 -8, 8, 1,
@@ -31,23 +38,9 @@ public class OurScene {
                 -8, 8, 0.1,
                 axes
         );
+        MainWindow mainWindow= new MainWindow(plot,topMenu.getHbox());
+        scene=new Scene(mainWindow.getRoot(), Color.rgb(35, 39, 50));
 
-        StackPane layout = new StackPane(
-                plot
-        );
-        layout.setPadding(new Insets(20));
-        layout.setStyle("-fx-background-color: rgb(195,246,244);");
-
-        
-		VBox root=new VBox();
-        
-        
-        BorderPane border = new BorderPane();
-        meniu =new Menu();
-        border.setTop(meniu.getHbox());
-        
-        root.getChildren().addAll(border,layout);
-        scene=new Scene(root, Color.rgb(35, 39, 50));
            
 	}
 	
