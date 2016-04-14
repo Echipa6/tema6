@@ -59,30 +59,18 @@ public class OurScene {
         
         scene=new Scene(mainWindow.getRoot(), Color.rgb(35, 39, 50));
         
-//        double xrow[] = { 0.0, -1.0, 0.5 };
-//        double yrow[] = { -3.0, -6.0, 0.0 };
-//        
-//        drawPath2(xrow, yrow[],-8, 8, 0.1,Color.rgb(35, 39, 50).toString(), 1);
-        
-        
-        
-        
-        double xrow[] = { 0.0, -1.0, 0.5 };
-      double yrow[] = { -3.0, -6.0, 0.0 };
-        
+
       
-      
-      
-      
-      scene.addEventFilter(MouseEvent.MOUSE_CLICKED, 
+      mainWindow.getLayout().addEventFilter(MouseEvent.MOUSE_CLICKED, 
               new EventHandler<MouseEvent>() {
           public void handle(MouseEvent e ) {
-//        	plot.xCoordinate.add(e.getX());
-//        	plot.yCoordinate.add(e.getY());
-          	System.out.println(e.getX());
-          	System.out.println(e.getY());
-          	xCoordinate[coordinateCount]=e.getX();
-          	yCoordinate[coordinateCount]=e.getY();
+          	  
+          	xCoordinate[coordinateCount]=(e.getX()-axes.getPrefWidth()/2)*(axes.getXAxis().getUpperBound() - 
+                    axes.getXAxis().getLowerBound())/axes.getPrefWidth() ;
+          	
+                
+          	yCoordinate[coordinateCount]=(axes.getPrefHeight() / 2- e.getY())*(axes.getYAxis().getUpperBound() - 
+                    axes.getYAxis().getLowerBound())/axes.getPrefHeight();
           	coordinateCount++;
           	if(coordinateCount>=4)
           	{
