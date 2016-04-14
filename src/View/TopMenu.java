@@ -12,9 +12,8 @@ public class TopMenu {
 	
 	
 	MenuController myMenu;
-	public MenuController getMyMenu() {
-		return myMenu;
-	}
+	
+
 
 	private HBox  hbox;
 	private TextField functionField;
@@ -23,6 +22,22 @@ public class TopMenu {
 	private Button buttonReset;
 	private Button buttonSave;
 	private Button buttonLoad;
+	
+	public void setMyMenu(MenuController myMenu) {
+		this.myMenu = myMenu;
+		buttonDraw.setOnAction(e -> {
+			myMenu.drawButtonPressed();
+			System.out.println(functionField.getText());
+			System.out.println(colorPicker1.getValue());
+		});
+		
+		buttonReset.setOnAction(e -> { myMenu.resetButtonPressed();});
+		buttonSave.setOnAction(e -> { myMenu.saveButtonPressed();});
+		buttonLoad.setOnAction(e -> { myMenu.loadButtonPressed();});
+	}
+	public MenuController getMyMenu() {
+		return myMenu;
+	}
 	
 
 	
@@ -38,7 +53,6 @@ public class TopMenu {
 
 	public TopMenu()
 	{
-		MenuController myMenu = new MenuController();
 		hbox=new HBox();
 		hbox.setPadding(new Insets(5, 12, 5, 12));
 		hbox.setSpacing(10);
@@ -54,23 +68,19 @@ public class TopMenu {
 		buttonDraw = new Button("Draw");
 		buttonDraw.setPrefSize(50, 15);
 
-		buttonDraw.setOnAction(e -> {
-			myMenu.drawButtonPressed();
-			System.out.println(functionField.getText());
-			System.out.println(colorPicker1.getValue());
-		});
+		
 
 		buttonReset = new Button("Reset");
 		buttonReset.setPrefSize(60, 20);
-		buttonReset.setOnAction(e -> { myMenu.resetButtonPressed();});
+		
 
 		buttonSave = new Button("Save");
 		buttonSave.setPrefSize(60, 20);
-		buttonSave.setOnAction(e -> { myMenu.saveButtonPressed();});
+		
 
 		buttonLoad = new Button("Load");
 		buttonLoad.setPrefSize(60, 20);
-		buttonLoad.setOnAction(e -> { myMenu.loadButtonPressed();});
+		
 
 		hbox.getChildren().addAll(labelFnct, functionField, colorPicker1, buttonDraw, buttonReset, buttonSave, buttonLoad);
 	}

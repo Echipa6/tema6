@@ -41,8 +41,12 @@ public class OurScene {
         );
         
         MainWindow mainWindow= new MainWindow(plot,topMenu.getHbox());
+        MenuController menuController= new MenuController();
+        topMenu.setMyMenu(menuController);
         topMenu.getMyMenu().setWindow(mainWindow);
         scene=new Scene(mainWindow.getRoot(), Color.rgb(35, 39, 50));
+        
+       
 
            
 	}
