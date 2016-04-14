@@ -1,6 +1,8 @@
 package Usefull;
+import java.util.ArrayList;
 import java.util.Vector;
 import java.util.function.Function;
+import java.util.List;
 
 import org.apache.commons.math.FunctionEvaluationException;
 import org.apache.commons.math.analysis.polynomials.PolynomialFunctionLagrangeForm;
@@ -18,6 +20,7 @@ public class Plot extends Pane {
     
 	private Expression e;
 	private Axes axes;
+	private List<FunctionG> functions;
 	public Vector<Double> xCoordinate;
     public Vector<Double> yCoordinate;
 	
@@ -27,18 +30,34 @@ public class Plot extends Pane {
 
 	public void setAxes(Axes axes) {
 		this.axes = axes;
+		this.getChildren().setAll(axes);
+		for(FunctionG f:functions)
+		{
+			drawPath(f.getFunction(),0.01,f.getColor(),f.getStroke());
+		}
 	}
 
 	public Plot(Axes axes){
+		this.functions=new ArrayList<FunctionG>();
 		this.axes=axes;
 		getChildren().setAll(axes);
 		xCoordinate= new Vector<Double>();
         yCoordinate= new Vector<Double>();
 	}
 	
-	public void drawPath(String f,double xMin, double xMax, double xInc,String color, int stroke)
+	public void addFunction(String f,String color, int stroke)
+	{
+		functions.add(new FunctionG(f,color,stroke));	
+		drawPath(f,0.01,color,stroke);
+	}
+	
+	public void clearFunctions(){
+		functions.clear();
+	}
+	public void drawPath(String f, double xInc,String color, int stroke)
 	{
 		e = new ExpressionBuilder(f).variables("x").build();
+		
 			
         Path path = new Path();
         //path.setStroke(Color.Double.parseDouble(color));
@@ -55,7 +74,7 @@ public class Plot extends Pane {
                 )
         );
 
-        double x = xMin;
+        double x = axes.getxMin();
         e.setVariable("x",x);
         double y = e.evaluate();
 
@@ -66,7 +85,7 @@ public class Plot extends Pane {
         );
 
         x += xInc;
-        while (x < xMax) {
+        while (x < axes.getxMax()) {
         	e.setVariable("x",x);
             y = e.evaluate();
             
@@ -80,9 +99,9 @@ public class Plot extends Pane {
             x += xInc;
         }
 
-        setMinSize(Pane.USE_PREF_SIZE, Pane.USE_PREF_SIZE);
-        setPrefSize(axes.getPrefWidth(), axes.getPrefHeight());
-        setMaxSize(Pane.USE_PREF_SIZE, Pane.USE_PREF_SIZE);
+       // setMinSize(Pane.USE_PREF_SIZE, Pane.USE_PREF_SIZE);
+       // setPrefSize(axes.getPrefWidth(), axes.getPrefHeight());
+       // setMaxSize(Pane.USE_PREF_SIZE, Pane.USE_PREF_SIZE);
 
         getChildren().add(path);
 	}
@@ -104,71 +123,5 @@ public class Plot extends Pane {
 
         return -y * sy + ty;
     }
-//    public void drawPath2(double[] xrow, double yrow[],double xMin, double xMax, double xInc,String color, int stroke)
-//	{
-//		//e = new ExpressionBuilder(f).variables("x").build();
-//    	PolynomialFunctionLagrangeForm p;
-//        
-//        p = new PolynomialFunctionLagrangeForm(xrow, yrow);
-//        double coeff[]=p.getCoefficients();
-//        
-//        for(int i=0;i<coeff.length;i++)
-//        {
-//        	System.out.println(coeff[i]);
-//        }
-//        Path path = new Path();
-//        //path.setStroke(Color.Double.parseDouble(color));
-//        Color c=Color.web(color);
-//        path.setStroke(c);
-//        //path.setStroke(Color.ORANGE.deriveColor(0, 1, 1, 0.6));
-//        path.setStrokeWidth(stroke);
-//
-//        path.setClip(
-//                new Rectangle(
-//                        0, 0, 
-//                        axes.getPrefWidth(), 
-//                        axes.getPrefHeight()
-//                )
-//        );
-//
-//        double x = xMin;
-//        double y=0;
-//		try {
-//			y = p.value(x);
-//		} catch (FunctionEvaluationException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
-//
-//        path.getElements().add(
-//                new MoveTo(
-//                        mapX(x, axes), mapY(y, axes)
-//                )
-//        );
-//
-//        x += xInc;
-//        while (x < xMax) {
-//            try {
-//				y = p.value(x);
-//			} catch (FunctionEvaluationException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//            
-//
-//            path.getElements().add(
-//                    new LineTo(
-//                            mapX(x, axes), mapY(y, axes)
-//                    )
-//            );
-//
-//            x += xInc;
-//        }
-//
-//        setMinSize(Pane.USE_PREF_SIZE, Pane.USE_PREF_SIZE);
-//        setPrefSize(axes.getPrefWidth(), axes.getPrefHeight());
-//        setMaxSize(Pane.USE_PREF_SIZE, Pane.USE_PREF_SIZE);
-//
-//        getChildren().add(path);
-//	}
+
 }
