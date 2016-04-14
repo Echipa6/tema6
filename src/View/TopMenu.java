@@ -9,8 +9,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 
 public class TopMenu {
-
+	
+	
 	MenuController myMenu;
+	public MenuController getMyMenu() {
+		return myMenu;
+	}
+
 	private HBox  hbox;
 	private TextField functionField;
 	private ColorPicker colorPicker1;
@@ -33,7 +38,7 @@ public class TopMenu {
 
 	public TopMenu()
 	{
-		myMenu= new MenuController();
+		MenuController myMenu = new MenuController();
 		hbox=new HBox();
 		hbox.setPadding(new Insets(5, 12, 5, 12));
 		hbox.setSpacing(10);

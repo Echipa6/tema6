@@ -27,6 +27,7 @@ public class OurScene {
 		TopMenu topMenu= new TopMenu();
 		
 		
+		
 		Axes axes = new Axes(
                 600, 500,
                 -8, 8, 1,
@@ -38,7 +39,9 @@ public class OurScene {
                 -8, 8, 0.1,
                 axes
         );
+        
         MainWindow mainWindow= new MainWindow(plot,topMenu.getHbox());
+        topMenu.getMyMenu().setWindow(mainWindow);
         scene=new Scene(mainWindow.getRoot(), Color.rgb(35, 39, 50));
 
            

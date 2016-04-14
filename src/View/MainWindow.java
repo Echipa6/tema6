@@ -13,14 +13,19 @@ import javafx.scene.paint.Color;
 public class MainWindow {
 	
 	private VBox root;
-	
+	private StackPane layout;
+
+	public StackPane getLayout() {
+		return layout;
+	}
+
 	public VBox getRoot() {
 		return root;
 	}
 
 	public MainWindow(Plot plot, HBox hbox)
 	{
-		StackPane layout = new StackPane(plot);
+		layout = new StackPane(plot);
         layout.setPadding(new Insets(20));
         layout.setStyle("-fx-background-color: rgb(195,246,244);");
 
