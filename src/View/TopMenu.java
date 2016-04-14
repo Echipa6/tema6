@@ -29,7 +29,7 @@ public class TopMenu {
 	public void setMyMenu(MenuController myMenu) {
 		this.myMenu = myMenu;
 		buttonDraw.setOnAction(e -> {
-			myMenu.drawButtonPressed(functionField.getText(),colorPicker1.getValue().toString());
+			myMenu.drawButtonPressed(functionField.getText(),colorPicker1.getValue().toString(),stroke.getSelectionModel().getSelectedItem().intValue());
 			System.out.println(functionField.getText());
 			System.out.println(colorPicker1.getValue());
 		});
@@ -41,6 +41,7 @@ public class TopMenu {
 		stroke.setOnAction(ev -> {
 			myMenu.strokePressed(stroke.getSelectionModel().getSelectedItem().intValue());
 		});
+		stroke.getSelectionModel().selectFirst();
 	}
 	public MenuController getMyMenu() {
 		return myMenu;
