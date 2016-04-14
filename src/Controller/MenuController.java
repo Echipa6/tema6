@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import org.apache.commons.math.analysis.polynomials.PolynomialFunctionLagrangeForm;
+
 import Usefull.Plot;
 import View.MainWindow;
 import javafx.embed.swing.SwingFXUtils;
