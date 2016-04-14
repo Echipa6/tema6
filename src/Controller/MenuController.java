@@ -33,18 +33,19 @@ public class MenuController {
         
 	}
 	
-	public void drawButtonPressed(String f, String color)
+	public void drawButtonPressed(String f, String color, int stroke)
 	{
 		System.out.println("ai apasat draw!");
 		System.out.println("F(x)="+f);
 		System.out.println("color="+color);
 		
-		plot.drawPath(f, -8,8,0.1);
+		plot.drawPath(f, -8,8,0.1,color,stroke);
 	}
 	
 	public void resetButtonPressed()
 	{
 		System.out.println("ai apasat reset!");
+		plot.getChildren().setAll(plot.getAxes());
 	}
 	public void loadButtonPressed()
 	{

@@ -28,14 +28,17 @@ public class Plot extends Pane {
 		getChildren().setAll(axes);
 	}
 	
-	public void drawPath(String f,double xMin, double xMax, double xInc)
+	public void drawPath(String f,double xMin, double xMax, double xInc,String color, int stroke)
 	{
 		e = new ExpressionBuilder(f).variables("x").build();
 		
 		
         Path path = new Path();
-        path.setStroke(Color.ORANGE.deriveColor(0, 1, 1, 0.6));
-        path.setStrokeWidth(2);
+        //path.setStroke(Color.Double.parseDouble(color));
+        Color c=Color.web(color);
+        path.setStroke(c);
+        //path.setStroke(Color.ORANGE.deriveColor(0, 1, 1, 0.6));
+        path.setStrokeWidth(stroke);
 
         path.setClip(
                 new Rectangle(
