@@ -13,6 +13,7 @@ import javafx.stage.Window;
 public class MenuController {
 
 	private MainWindow window;
+	
 
 	public void saveButtonPressed()
 	{
@@ -71,4 +72,8 @@ public class MenuController {
             e.printStackTrace();  
         }  
     }  
+	public void strokePressed(int strokeValue)
+	{
+		System.out.println("ai apasat stroke! " + strokeValue);
+	}
 }

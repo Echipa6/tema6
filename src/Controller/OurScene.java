@@ -40,6 +40,7 @@ public class OurScene {
         );
         
         MainWindow mainWindow= new MainWindow(plot,topMenu.getHbox());
+        //MainWindow mainWindow= new MainWindow(topMenu.getHbox());
         MenuController menuController= new MenuController(mainWindow);
         topMenu.setMyMenu(menuController);
         
