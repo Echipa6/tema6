@@ -43,6 +43,9 @@ public class TopMenu {
 		});
 		stroke.getSelectionModel().selectFirst();
 	}
+	public ComboBox<Integer> getStroke() {
+		return stroke;
+	}
 	public MenuController getMyMenu() {
 		return myMenu;
 	}

@@ -7,6 +7,8 @@ import java.util.List;
 import org.apache.commons.math.FunctionEvaluationException;
 import org.apache.commons.math.analysis.polynomials.PolynomialFunctionLagrangeForm;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.LineTo;
@@ -56,8 +58,18 @@ public class Plot extends Pane {
 	}
 	public void drawPath(String f, double xInc,String color, int stroke)
 	{
+		try{
 		e = new ExpressionBuilder(f).variables("x").build();
-		
+		}catch(IllegalArgumentException e)
+		{
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Exceptie!");
+			alert.setHeaderText(null);
+			alert.setContentText("Pentru a desena graficul unei functii, aceasta nu trebuie sa fie valida. Verifica daca functia este corecta.");
+
+			alert.showAndWait();
+			return;
+		}
 			
         Path path = new Path();
         //path.setStroke(Color.Double.parseDouble(color));

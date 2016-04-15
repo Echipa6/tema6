@@ -1,4 +1,6 @@
 package Controller;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.util.Vector;
 
 import org.apache.commons.math.FunctionEvaluationException;
@@ -15,6 +17,8 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 
@@ -22,13 +26,15 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
-
+import org.jfree.graphics2d.Args; 
 
 public class OurScene {
 	private Scene scene;
 	double xCoordinate[];
 	double yCoordinate[];
 	Integer coordinateCount;
+	
+
 	public Scene getScene() {
 		return scene;
 	}
@@ -40,6 +46,7 @@ public class OurScene {
 
 	public OurScene()
 	{
+		
 		TopMenu topMenu= new TopMenu();
 		xCoordinate= new double[4];
 		yCoordinate= new double[4];
@@ -50,55 +57,12 @@ public class OurScene {
 
 		Plot plot=new Plot(axes);
 		//plot.drawPath("x", -8, 8, 0.1);
-
-        
-        MainWindow mainWindow= new MainWindow(plot,topMenu.getHbox());
-        MenuController menuController= new MenuController(mainWindow,plot);
-        topMenu.setMyMenu(menuController);
-        
-        scene=new Scene(mainWindow.getRoot(), Color.rgb(35, 39, 50));
-        
-
-      
-      mainWindow.getLayout().addEventFilter(MouseEvent.MOUSE_CLICKED, 
-              new EventHandler<MouseEvent>() {
-          public void handle(MouseEvent e ) {
-          	  
-          	xCoordinate[coordinateCount]=(e.getX()-axes.getPrefWidth()/2)*(axes.getXAxis().getUpperBound() - 
-                    axes.getXAxis().getLowerBound())/axes.getPrefWidth() ;
-          	
-                
-          	yCoordinate[coordinateCount]=(axes.getPrefHeight() / 2- e.getY())*(axes.getYAxis().getUpperBound() - 
-                    axes.getYAxis().getLowerBound())/axes.getPrefHeight();
-          	coordinateCount++;
-          	if(coordinateCount>=4)
-          	{
-          		coordinateCount=0;
-          		PolynomialFunctionLagrangeForm p;
-          		p = new PolynomialFunctionLagrangeForm(xCoordinate, yCoordinate);
-                double coeff[]=p.getCoefficients();
-                
-                String f=Double.toString(coeff[0]);
-                
-                for(int i=1;i<coeff.length;i++)
-                {
-                	if(coeff[i]>0)
-                	{
-                		f+="+";
-                	}
-                	f+=coeff[i]+"*x^"+i;
-                }
-                menuController.drawButtonPressed(f,"0x003333" , 2);
-          	}
-          };
-      });
-
+		
 		MainWindow mainWindow= new MainWindow(plot,topMenu.getHbox());
 		MenuController menuController= new MenuController(mainWindow,plot);
 		topMenu.setMyMenu(menuController);
 
 		scene=new Scene(mainWindow.getRoot(), Color.rgb(35, 39, 50));
-		/************************/
 
 		scene.widthProperty().addListener(new ChangeListener<Number>() {
 			@Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
@@ -114,6 +78,54 @@ public class OurScene {
 				System.out.println("Height: " + newSceneHeight);
 			}
 		});
+        
+
+      
+		 mainWindow.getLayout().addEventFilter(MouseEvent.MOUSE_CLICKED, 
+	              new EventHandler<MouseEvent>() {
+	          public void handle(MouseEvent e ) {
+	          	  
+	          	xCoordinate[coordinateCount]=(e.getX()-axes.getPrefWidth()/2)*(axes.getXAxis().getUpperBound() - 
+	                    axes.getXAxis().getLowerBound())/axes.getPrefWidth() ;
+	          	
+	                
+	          	yCoordinate[coordinateCount]=(axes.getPrefHeight() / 2- e.getY())*(axes.getYAxis().getUpperBound() - 
+	                    axes.getYAxis().getLowerBound())/axes.getPrefHeight();
+	          	coordinateCount++;
+	          	if(coordinateCount>=4)
+	          	{
+	          		coordinateCount=0;
+	          		PolynomialFunctionLagrangeForm p;
+	          		p = new PolynomialFunctionLagrangeForm(xCoordinate, yCoordinate);
+	          		double coeff[]=null;
+	          		try{
+	          			coeff=p.getCoefficients();
+	          		}catch(Exception exception)
+	          		{
+	          			Alert alert = new Alert(AlertType.INFORMATION);
+	        			alert.setTitle("Exceptie!");
+	        			alert.setHeaderText("Exceptie!");
+	        			alert.setContentText("Algoritmul folosit nu a putut gasi o functie. Incearca alte puncte");
+
+	        			alert.showAndWait();
+	        			return;
+	          		}
+	                String f=Double.toString(coeff[0]);
+	                
+	                for(int i=1;i<coeff.length;i++)
+	                {
+	                	if(coeff[i]>0)
+	                	{
+	                		f+="+";
+	                	}
+	                	f+=coeff[i]+"*x^"+i;
+	                }
+	                menuController.drawButtonPressed(f,"0x003333" , 2);
+	          	}
+          };
+      });
+
+		
 
 		//        double xrow[] = { 0.0, -1.0, 0.5 };
 		//        double yrow[] = { -3.0, -6.0, 0.0 };
@@ -130,37 +142,7 @@ public class OurScene {
 
 
 
-		scene.addEventFilter(MouseEvent.MOUSE_CLICKED, 
-				new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent e ) {
-				//        	plot.xCoordinate.add(e.getX());
-				//        	plot.yCoordinate.add(e.getY());
-				System.out.println(e.getX());
-				System.out.println(e.getY());
-				xCoordinate[coordinateCount]=e.getX();
-				yCoordinate[coordinateCount]=e.getY();
-				coordinateCount++;
-				if(coordinateCount>=4)
-				{
-					coordinateCount=0;
-					PolynomialFunctionLagrangeForm p;
-					p = new PolynomialFunctionLagrangeForm(xCoordinate, yCoordinate);
-					double coeff[]=p.getCoefficients();
-
-					String f=Double.toString(coeff[0]);
-
-					for(int i=1;i<coeff.length;i++)
-					{
-						if(coeff[i]>0)
-						{
-							f+="+";
-						}
-						f+=coeff[i]+"*x^"+i;
-					}
-					menuController.drawButtonPressed(f,"0x003333" , 2);
-				}
-			};
-		});
+		
 
 
 

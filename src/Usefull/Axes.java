@@ -3,6 +3,7 @@ import javafx.beans.binding.Bindings;
 import javafx.geometry.Side;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 
 public class Axes extends Pane {
     private NumberAxis xAxis;
@@ -29,6 +30,21 @@ public class Axes extends Pane {
 	private double yMax;
     public Axes(int width, int height,double xTickUnit, double yTickUnit
     ) {
+    	Text origin = new Text();
+    	origin.setText("O");
+    	origin.setLayoutX(width/2-4);
+    	origin.setLayoutY(height/2+5);
+    	
+    	Text yLabel= new Text();
+    	yLabel.setText("Y");
+    	yLabel.setLayoutX(width/2-4);
+    	
+    	Text xLabel= new Text();
+    	xLabel.setText("X");
+    	xLabel.setLayoutY(height/2+5);
+    	xLabel.setLayoutX(width);
+    	
+    	
     	
     	xMin=-width/100;
     	xMax=width/100;
@@ -55,7 +71,7 @@ public class Axes extends Pane {
             )
         );
 
-        getChildren().setAll(xAxis, yAxis);
+        getChildren().setAll(xAxis, yAxis,origin,xLabel,yLabel);
     }
 
     public NumberAxis getXAxis() {
