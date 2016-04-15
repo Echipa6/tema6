@@ -4,10 +4,7 @@ package Usefull;
 
 public class FunctionG  {
 
-	@Override
-	public String toString() {
-		return "FunctionG [function=" + function + ", color=" + color + ", stroke=" + stroke + "]";
-	}
+	
 
 	private String function;
 	private String color;
@@ -47,5 +44,10 @@ public class FunctionG  {
 
 	public void setStroke(String stroke) {
 		this.stroke = stroke;
+	}
+	
+	@Override
+	public String toString() {
+		return "FunctionG [function=" + function + ", color=" + color + ", stroke=" + stroke + "]";
 	}
 }

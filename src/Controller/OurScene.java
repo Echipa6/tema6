@@ -1,13 +1,7 @@
 package Controller;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.util.Vector;
 
-import org.apache.commons.math.FunctionEvaluationException;
+
 import org.apache.commons.math.analysis.polynomials.PolynomialFunctionLagrangeForm;
-
-import com.sun.javafx.geom.Vec2d;
-
 import Usefull.Axes;
 import Usefull.Plot;
 import View.MainWindow;
@@ -15,15 +9,10 @@ import View.TopMenu;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 
@@ -33,16 +22,6 @@ public class OurScene {
 	double xCoordinate[];
 	double yCoordinate[];
 	Integer coordinateCount;
-	
-
-	public Scene getScene() {
-		return scene;
-	}
-
-	public void setScene(Scene scene) {
-		this.scene = scene;
-	}
-
 
 	public OurScene()
 	{
@@ -68,14 +47,12 @@ public class OurScene {
 			@Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
 
 				plot.setAxes(new Axes(newSceneWidth.intValue()-60,(int)mainWindow.getRoot().getHeight()-60,1,1));
-				System.out.println("Width: " + newSceneWidth);
 			}
 		});
 		scene.heightProperty().addListener(new ChangeListener<Number>() {
 			@Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
 
 				plot.setAxes(new Axes((int)mainWindow.getRoot().getWidth()-60,newSceneHeight.intValue()-60,1,1));
-				System.out.println("Height: " + newSceneHeight);
 			}
 		});
         
@@ -91,6 +68,7 @@ public class OurScene {
 	                
 	          	yCoordinate[coordinateCount]=(axes.getPrefHeight() / 2- e.getY())*(axes.getYAxis().getUpperBound() - 
 	                    axes.getYAxis().getLowerBound())/axes.getPrefHeight();
+	          	
 	          	coordinateCount++;
 	          	if(coordinateCount>=4)
 	          	{
@@ -126,6 +104,14 @@ public class OurScene {
       });
 
 
+	}
+
+	public Scene getScene() {
+		return scene;
+	}
+
+	public void setScene(Scene scene) {
+		this.scene = scene;
 	}
 
 

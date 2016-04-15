@@ -4,8 +4,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import org.apache.commons.math.analysis.polynomials.PolynomialFunctionLagrangeForm;
-
 import Usefull.Plot;
 import View.MainWindow;
 import javafx.embed.swing.SwingFXUtils;
@@ -21,8 +19,7 @@ public class MenuController {
 	{
 		
 		FileChooser fileChooser = new FileChooser();
-  	  
-        
+  	 
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.png");
         fileChooser.getExtensionFilters().add(extFilter);
         
@@ -32,8 +29,6 @@ public class MenuController {
            snapshot(file.toString());
            plot.Serealize(file);
         }
-        
-        
         
 	}
 	
@@ -53,18 +48,14 @@ public class MenuController {
 		
 		FileChooser fileChooser = new FileChooser();
 	  	  
-       
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.png");
         fileChooser.getExtensionFilters().add(extFilter);
-        
        
         File file = fileChooser.showOpenDialog(window.getLayout().getScene().getWindow());
         
         if(file != null){
            plot.Deserealize(file);
         }
-        
-       
 	}
 	
 	
@@ -82,7 +73,6 @@ public class MenuController {
         try {  
         	
             WritableImage image = window.getLayout().snapshot(null, null);  
-  
             File outputFile = new File(file); 
   
             ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", outputFile);  
@@ -90,10 +80,5 @@ public class MenuController {
         } catch (IOException e) {  
             e.printStackTrace();  
         }  
-    }  
-	
-public void strokePressed(int strokeValue)
-	{
-		System.out.println("ai apasat stroke! " + strokeValue);
-	}
+    }
 }

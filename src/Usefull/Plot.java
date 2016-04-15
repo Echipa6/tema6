@@ -51,6 +51,7 @@ public class Plot extends Pane {
 	
 	public void drawFunctions()
 	{
+		this.getChildren().setAll(axes);
 		for(FunctionG f:functions)
 		{
 			drawPath(f.getFunction(),0.01,f.getColor(),Integer.valueOf(f.getStroke()).intValue());
@@ -68,7 +69,7 @@ public class Plot extends Pane {
 	
 	public void setAxes(Axes axes) {
 		this.axes = axes;
-		this.getChildren().setAll(axes);
+		
 		drawFunctions();
 	}
 
@@ -100,42 +101,23 @@ public class Plot extends Pane {
         Color c=Color.web(color);
         path.setStroke(c);
         path.setStrokeWidth(stroke);
-        path.setClip(
-                new Rectangle(
-                        0, 0, 
-                        axes.getPrefWidth(), 
-                        axes.getPrefHeight()
-                )
-        );
+        path.setClip(new Rectangle(0, 0, axes.getPrefWidth(), axes.getPrefHeight()));
 
         double x = axes.getxMin();
         e.setVariable("x",x);
         double y = e.evaluate();
 
-        path.getElements().add(
-                new MoveTo(
-                        mapX(x, axes), mapY(y, axes)
-                )
-        );
+        path.getElements().add(new MoveTo(mapX(x, axes), mapY(y, axes)));
 
         x += xInc;
         while (x < axes.getxMax()) {
         	e.setVariable("x",x);
             y = e.evaluate();
             
-
-            path.getElements().add(
-                    new LineTo(
-                            mapX(x, axes), mapY(y, axes)
-                    )
-            );
+            path.getElements().add(new LineTo(mapX(x, axes), mapY(y, axes)));
 
             x += xInc;
         }
-
-       // setMinSize(Pane.USE_PREF_SIZE, Pane.USE_PREF_SIZE);
-       // setPrefSize(axes.getPrefWidth(), axes.getPrefHeight());
-       // setMaxSize(Pane.USE_PREF_SIZE, Pane.USE_PREF_SIZE);
 
         getChildren().add(path);
         return 1;
@@ -161,8 +143,7 @@ public class Plot extends Pane {
     
     public void Serealize(File file){
     	try{
-    		//System.out.println((file.getName().toString()).substring(0,(file.getName().toString()).lastIndexOf('.'))+".xml");
-    		//System.out.println("Serealizez:"+ this.getFunctions().get(0).getFunction()+" functii");
+    		
     		String fileName=(file.getName().toString()).substring(0,(file.getName().toString()).lastIndexOf('.'))+".xml";
 			XMLEncoder encoder = new XMLEncoder( new BufferedOutputStream( new FileOutputStream(fileName)));
 			encoder.writeObject(this.getFunctions());
@@ -170,7 +151,7 @@ public class Plot extends Pane {
 			
 		}catch(FileNotFoundException e)
 		{
-			System.out.println("exceptie");
+			System.out.println("exceptie File NotFound");
 		}
 		
     }
@@ -180,6 +161,7 @@ public class Plot extends Pane {
     		
     		String fileName=(file.getName().toString()).substring(0,(file.getName().toString()).lastIndexOf('.'))+".xml";
     		XMLDecoder decoder =new XMLDecoder(new BufferedInputStream(new FileInputStream(fileName)));
+				@SuppressWarnings("unchecked")
 				List<FunctionG> readObject = (List<FunctionG>)decoder.readObject();
 				this.setFunctions(readObject);
 				decoder.close();
@@ -191,5 +173,4 @@ public class Plot extends Pane {
     	
     }
     
-
 }
