@@ -30,8 +30,6 @@ public class TopMenu {
 		this.myMenu = myMenu;
 		buttonDraw.setOnAction(e -> {
 			myMenu.drawButtonPressed(functionField.getText(),colorPicker1.getValue().toString(),stroke.getSelectionModel().getSelectedItem().intValue());
-			System.out.println(functionField.getText());
-			System.out.println(colorPicker1.getValue());
 		});
 		
 		buttonReset.setOnAction(e -> { myMenu.resetButtonPressed();});
@@ -43,21 +41,23 @@ public class TopMenu {
 		});
 		stroke.getSelectionModel().selectFirst();
 	}
+		
 	public ComboBox<Integer> getStroke() {
 		return stroke;
 	}
+	
 	public MenuController getMyMenu() {
 		return myMenu;
 	}
 	
-
-	
 	public HBox getHbox() {
 		return hbox;
 	}
+	
 	public TextField getFunctionField() {
 		return functionField;
 	}
+	
 	public ColorPicker getColorPicker1() {
 		return colorPicker1;
 	}

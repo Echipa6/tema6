@@ -28,35 +28,10 @@ public class Plot extends Pane {
 	private Expression e;
 	private Axes axes;
 	private List<FunctionG> functions;
-	public void setFunctions(List<FunctionG> functions) {
-		this.functions = functions;
-		
-	}
-
-	public List<FunctionG> getFunctions() {
-		return functions;
-	}
-
 	public Vector<Double> xCoordinate;
     public Vector<Double> yCoordinate;
 	
-	public Axes getAxes() {
-		return axes;
-	}
-	public void drawFunctions()
-	{
-		for(FunctionG f:functions)
-		{
-			drawPath(f.getFunction(),0.01,f.getColor(),f.getStroke());
-		}
-	}
-	public void setAxes(Axes axes) {
-		this.axes = axes;
-		this.getChildren().setAll(axes);
-		drawFunctions();
-	}
-
-	public Plot(Axes axes){
+    public Plot(Axes axes){
 		this.functions=new ArrayList<FunctionG>();
 		this.axes=axes;
 		getChildren().setAll(axes);
@@ -64,16 +39,49 @@ public class Plot extends Pane {
         yCoordinate= new Vector<Double>();
 	}
 	
-	public void addFunction(String f,String color, int stroke)
+    
+	public void setFunctions(List<FunctionG> functions) {
+		this.functions = functions;
+		
+	}
+	
+	public List<FunctionG> getFunctions() {
+		return functions;
+	}
+	
+	public void drawFunctions()
 	{
-		functions.add(new FunctionG(f,color,stroke));	
-		drawPath(f,0.01,color,stroke);
+		for(FunctionG f:functions)
+		{
+			drawPath(f.getFunction(),0.01,f.getColor(),Integer.valueOf(f.getStroke()).intValue());
+		}
 	}
 	
 	public void clearFunctions(){
 		functions.clear();
 	}
-	public void drawPath(String f, double xInc,String color, int stroke)
+	
+	public Axes getAxes() {
+		return axes;
+	}
+	
+	
+	public void setAxes(Axes axes) {
+		this.axes = axes;
+		this.getChildren().setAll(axes);
+		drawFunctions();
+	}
+
+	
+	public void addFunction(String f,String color, int stroke)
+	{
+		int codRetur;
+		codRetur=drawPath(f,0.01,color,stroke);
+		if(codRetur==1)functions.add(new FunctionG(f,color,String.valueOf(stroke)));	
+	}
+	
+	
+	public int drawPath(String f, double xInc,String color, int stroke)
 	{
 		try{
 		e = new ExpressionBuilder(f).variables("x").build();
@@ -85,16 +93,13 @@ public class Plot extends Pane {
 			alert.setContentText("Pentru a desena graficul unei functii, aceasta nu trebuie sa fie valida. Verifica daca functia este corecta.");
 
 			alert.showAndWait();
-			return;
+			return 0;
 		}
 			
         Path path = new Path();
-        //path.setStroke(Color.Double.parseDouble(color));
         Color c=Color.web(color);
         path.setStroke(c);
-        //path.setStroke(Color.ORANGE.deriveColor(0, 1, 1, 0.6));
         path.setStrokeWidth(stroke);
-
         path.setClip(
                 new Rectangle(
                         0, 0, 
@@ -133,6 +138,7 @@ public class Plot extends Pane {
        // setMaxSize(Pane.USE_PREF_SIZE, Pane.USE_PREF_SIZE);
 
         getChildren().add(path);
+        return 1;
 	}
 	
     private double mapX(double x, Axes axes) {
@@ -155,9 +161,10 @@ public class Plot extends Pane {
     
     public void Serealize(File file){
     	try{
-    		System.out.println(file.getName().toString()+".xml");
-    		System.out.println("Serealizez:"+ this.getFunctions().get(0).getFunction()+" functii");
-			XMLEncoder encoder = new XMLEncoder( new BufferedOutputStream( new FileOutputStream(file.getName().toString()+".xml")));
+    		//System.out.println((file.getName().toString()).substring(0,(file.getName().toString()).lastIndexOf('.'))+".xml");
+    		//System.out.println("Serealizez:"+ this.getFunctions().get(0).getFunction()+" functii");
+    		String fileName=(file.getName().toString()).substring(0,(file.getName().toString()).lastIndexOf('.'))+".xml";
+			XMLEncoder encoder = new XMLEncoder( new BufferedOutputStream( new FileOutputStream(fileName)));
 			encoder.writeObject(this.getFunctions());
 			encoder.close();
 			
@@ -170,13 +177,10 @@ public class Plot extends Pane {
     
     public void Deserealize(File file){
     	try{
-    		System.out.println(file.getName().toString()+".xml");
-			XMLDecoder decoder =new XMLDecoder(new BufferedInputStream(new FileInputStream(file.getName().toString()+".xml")));
-			
+    		
+    		String fileName=(file.getName().toString()).substring(0,(file.getName().toString()).lastIndexOf('.'))+".xml";
+    		XMLDecoder decoder =new XMLDecoder(new BufferedInputStream(new FileInputStream(fileName)));
 				List<FunctionG> readObject = (List<FunctionG>)decoder.readObject();
-				System.out.println("Am Deserealizez:"+readObject.get(0).getFunction()+" *********functii");
-				System.out.println("Am Deserealizez:"+readObject.get(0).getStroke()+" *********functii");
-				System.out.println("Am Deserealizez:"+readObject.get(0).getColor()+" *********functii");
 				this.setFunctions(readObject);
 				decoder.close();
 				drawFunctions();

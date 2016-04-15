@@ -27,8 +27,8 @@ public class MainWindow {
 	{
 		layout = new StackPane(plot);
         layout.setPadding(new Insets(20));
-        layout.setStyle("-fx-background-color: rgb(195,246,244);");
-
+        //layout.setStyle("-fx-background-color: rgb(195,246,244);");
+        layout.setStyle("-fx-background-color: rgb(249,250,240);");
         root=new VBox();
         
         BorderPane border = new BorderPane();

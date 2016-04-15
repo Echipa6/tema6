@@ -9,6 +9,9 @@ public class Axes extends Pane {
     private NumberAxis xAxis;
     private NumberAxis yAxis;
     private double xMin;
+    private double xMax;
+	private double yMin;
+	private double yMax;
 	public double getxMin() {
 		return xMin;
 	}
@@ -25,9 +28,7 @@ public class Axes extends Pane {
 		return yMax;
 	}
 
-	private double xMax;
-	private double yMin;
-	private double yMax;
+	
     public Axes(int width, int height,double xTickUnit, double yTickUnit
     ) {
     	Text origin = new Text();
