@@ -33,6 +33,8 @@ public class MenuController {
            snapshot(file.toString());
         }
         
+        plot.Serealize(file);
+        
 	}
 	
 	public void drawButtonPressed(String f, String color, int stroke)
@@ -53,6 +55,21 @@ public class MenuController {
 	public void loadButtonPressed()
 	{
 		System.out.println("ai apasat load!");
+		FileChooser fileChooser = new FileChooser();
+	  	  
+        //Set extension filter
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.png");
+        fileChooser.getExtensionFilters().add(extFilter);
+        
+        //Show save file dialog
+        File file = fileChooser.showOpenDialog(window.getLayout().getScene().getWindow());
+        
+        if(file != null){
+           System.out.println(file.toString());
+           //snapshot(file.toString());
+        }
+        
+        plot.Deserealize(file);
 	}
 	
 	

@@ -1,11 +1,16 @@
 package Usefull;
+import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.Vector;
-import java.util.function.Function;
 import java.util.List;
+import java.util.Vector;
 
-import org.apache.commons.math.FunctionEvaluationException;
-import org.apache.commons.math.analysis.polynomials.PolynomialFunctionLagrangeForm;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -21,20 +26,32 @@ public class Plot extends Pane {
 	private Expression e;
 	private Axes axes;
 	private List<FunctionG> functions;
+	public void setFunctions(List<FunctionG> functions) {
+		this.functions = functions;
+		
+	}
+
+	public List<FunctionG> getFunctions() {
+		return functions;
+	}
+
 	public Vector<Double> xCoordinate;
     public Vector<Double> yCoordinate;
 	
 	public Axes getAxes() {
 		return axes;
 	}
-
-	public void setAxes(Axes axes) {
-		this.axes = axes;
-		this.getChildren().setAll(axes);
+	public void drawFunctions()
+	{
 		for(FunctionG f:functions)
 		{
 			drawPath(f.getFunction(),0.01,f.getColor(),f.getStroke());
 		}
+	}
+	public void setAxes(Axes axes) {
+		this.axes = axes;
+		this.getChildren().setAll(axes);
+		drawFunctions();
 	}
 
 	public Plot(Axes axes){
@@ -123,5 +140,40 @@ public class Plot extends Pane {
 
         return -y * sy + ty;
     }
+    
+    public void Serealize(File file){
+    	try{
+System.out.println(file.getName().toString()+".xml");
+    		System.out.println("Serealizez:"+ this.getFunctions().get(0).getFunction()+" functii");
+			XMLEncoder encoder = new XMLEncoder( new BufferedOutputStream( new FileOutputStream(file.getName().toString()+".xml")));
+			encoder.writeObject(this.getFunctions());
+			encoder.close();
+			
+		}catch(FileNotFoundException e)
+		{
+			System.out.println("eceptie");
+		}
+		
+    }
+    
+    public void Deserealize(File file){
+    	try{
+    		System.out.println(file.getName().toString()+".xml");
+			XMLDecoder decoder =new XMLDecoder(new BufferedInputStream(new FileInputStream(file.getName().toString()+".xml")));
+			
+				List<FunctionG> readObject = (List<FunctionG>)decoder.readObject();
+				System.out.println("Am Deserealizez:"+readObject.get(0).getFunction()+" *********functii");
+				System.out.println("Am Deserealizez:"+readObject.get(0).getStroke()+" *********functii");
+				System.out.println("Am Deserealizez:"+readObject.get(0).getColor()+" *********functii");
+				this.setFunctions(readObject);
+				decoder.close();
+				drawFunctions();
+		}catch(FileNotFoundException e)
+		{
+			System.out.println("Exception");
+		}
+    	
+    }
+    
 
 }
