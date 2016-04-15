@@ -26,7 +26,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
-import org.jfree.graphics2d.Args; 
+
 
 public class OurScene {
 	private Scene scene;
@@ -120,7 +120,7 @@ public class OurScene {
 	                	}
 	                	f+=coeff[i]+"*x^"+i;
 	                }
-	                menuController.drawButtonPressed(f,"0x003333" , 2);
+	                menuController.drawButtonPressed(f,topMenu.getColorPicker1().getValue().toString(),topMenu.getStroke().getSelectionModel().getSelectedItem().intValue());
 	          	}
           };
       });

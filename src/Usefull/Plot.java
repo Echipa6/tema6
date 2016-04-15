@@ -47,7 +47,7 @@ public class Plot extends Pane {
 	{
 		for(FunctionG f:functions)
 		{
-			drawPath(f.getFunction(),0.01,f.getColor(),f.getStroke());
+			drawPath(f.getFunction(),0.01,f.getColor(),Integer.valueOf(f.getStroke()).intValue());
 		}
 	}
 	public void setAxes(Axes axes) {
@@ -66,14 +66,15 @@ public class Plot extends Pane {
 	
 	public void addFunction(String f,String color, int stroke)
 	{
-		functions.add(new FunctionG(f,color,stroke));	
-		drawPath(f,0.01,color,stroke);
+		int codRetur;
+		codRetur=drawPath(f,0.01,color,stroke);
+		if(codRetur==1)functions.add(new FunctionG(f,color,String.valueOf(stroke)));	
 	}
 	
 	public void clearFunctions(){
 		functions.clear();
 	}
-	public void drawPath(String f, double xInc,String color, int stroke)
+	public int drawPath(String f, double xInc,String color, int stroke)
 	{
 		try{
 		e = new ExpressionBuilder(f).variables("x").build();
@@ -85,7 +86,7 @@ public class Plot extends Pane {
 			alert.setContentText("Pentru a desena graficul unei functii, aceasta nu trebuie sa fie valida. Verifica daca functia este corecta.");
 
 			alert.showAndWait();
-			return;
+			return 0;
 		}
 			
         Path path = new Path();
@@ -133,6 +134,7 @@ public class Plot extends Pane {
        // setMaxSize(Pane.USE_PREF_SIZE, Pane.USE_PREF_SIZE);
 
         getChildren().add(path);
+        return 1;
 	}
 	
     private double mapX(double x, Axes axes) {
