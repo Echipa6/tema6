@@ -155,7 +155,7 @@ public class Plot extends Pane {
     
     public void Serealize(File file){
     	try{
-System.out.println(file.getName().toString()+".xml");
+    		System.out.println(file.getName().toString()+".xml");
     		System.out.println("Serealizez:"+ this.getFunctions().get(0).getFunction()+" functii");
 			XMLEncoder encoder = new XMLEncoder( new BufferedOutputStream( new FileOutputStream(file.getName().toString()+".xml")));
 			encoder.writeObject(this.getFunctions());
@@ -163,7 +163,7 @@ System.out.println(file.getName().toString()+".xml");
 			
 		}catch(FileNotFoundException e)
 		{
-			System.out.println("eceptie");
+			System.out.println("exceptie");
 		}
 		
     }
