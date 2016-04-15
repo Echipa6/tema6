@@ -16,60 +16,55 @@ public class MenuController {
 
 	private MainWindow window;
 	private Plot plot;
+	
 	public void saveButtonPressed()
 	{
-		System.out.println("ai apasat save!");
+		
 		FileChooser fileChooser = new FileChooser();
   	  
-        //Set extension filter
+        
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.png");
         fileChooser.getExtensionFilters().add(extFilter);
         
-        //Show save file dialog
         File file = fileChooser.showSaveDialog(window.getLayout().getScene().getWindow());
         
         if(file != null){
-           System.out.println(file.toString());
            snapshot(file.toString());
+           plot.Serealize(file);
         }
         
-        plot.Serealize(file);
+        
         
 	}
 	
 	public void drawButtonPressed(String f, String color, int stroke)
 	{
-		System.out.println("ai apasat draw!");
-		System.out.println("F(x)="+f);
-		System.out.println("color="+color);
-		
 		plot.addFunction(f, color, stroke);
 	}
 	
 	public void resetButtonPressed()
 	{
-		System.out.println("ai apasat reset!");
 		plot.getChildren().setAll(plot.getAxes());
 		plot.clearFunctions();
 	}
+	
 	public void loadButtonPressed()
 	{
-		System.out.println("ai apasat load!");
+		
 		FileChooser fileChooser = new FileChooser();
 	  	  
-        //Set extension filter
+       
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.png");
         fileChooser.getExtensionFilters().add(extFilter);
         
-        //Show save file dialog
+       
         File file = fileChooser.showOpenDialog(window.getLayout().getScene().getWindow());
         
         if(file != null){
-           System.out.println(file.toString());
-           //snapshot(file.toString());
+           plot.Deserealize(file);
         }
         
-        plot.Deserealize(file);
+       
 	}
 	
 	
@@ -92,12 +87,12 @@ public class MenuController {
   
             ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", outputFile);  
   
-            System.out.println("Wrote: " + outputFile);  
         } catch (IOException e) {  
             e.printStackTrace();  
         }  
     }  
-	public void strokePressed(int strokeValue)
+	
+public void strokePressed(int strokeValue)
 	{
 		System.out.println("ai apasat stroke! " + strokeValue);
 	}

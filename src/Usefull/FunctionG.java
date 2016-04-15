@@ -13,17 +13,6 @@ public class FunctionG  {
 	private String color;
 	private String stroke;
 	
-	public String getFunction() {
-		return function;
-	}
-
-	public String getColor() {
-		return color;
-	}
-
-	public String getStroke() {
-		return stroke;
-	}
 	public FunctionG()
 	{
 		
@@ -35,6 +24,19 @@ public class FunctionG  {
 		this.stroke=stroke;
 	}
 
+	
+	public String getFunction() {
+		return function;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public String getStroke() {
+		return stroke;
+	}
+	
 	public void setFunction(String function) {
 		this.function = function;
 	}

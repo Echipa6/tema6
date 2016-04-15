@@ -56,7 +56,7 @@ public class OurScene {
 		Axes axes = new Axes(600, 500, 1, 1);
 
 		Plot plot=new Plot(axes);
-		//plot.drawPath("x", -8, 8, 0.1);
+		
 		
 		MainWindow mainWindow= new MainWindow(plot,topMenu.getHbox());
 		MenuController menuController= new MenuController(mainWindow,plot);
@@ -124,26 +124,6 @@ public class OurScene {
 	          	}
           };
       });
-
-		
-
-		//        double xrow[] = { 0.0, -1.0, 0.5 };
-		//        double yrow[] = { -3.0, -6.0, 0.0 };
-		//        
-		//        drawPath2(xrow, yrow[],-8, 8, 0.1,Color.rgb(35, 39, 50).toString(), 1);
-
-
-
-
-		double xrow[] = { 0.0, -1.0, 0.5 };
-		double yrow[] = { -3.0, -6.0, 0.0 };
-
-
-
-
-
-		
-
 
 
 	}

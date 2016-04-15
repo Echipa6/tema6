@@ -28,21 +28,27 @@ public class Plot extends Pane {
 	private Expression e;
 	private Axes axes;
 	private List<FunctionG> functions;
+	public Vector<Double> xCoordinate;
+    public Vector<Double> yCoordinate;
+	
+    public Plot(Axes axes){
+		this.functions=new ArrayList<FunctionG>();
+		this.axes=axes;
+		getChildren().setAll(axes);
+		xCoordinate= new Vector<Double>();
+        yCoordinate= new Vector<Double>();
+	}
+	
+    
 	public void setFunctions(List<FunctionG> functions) {
 		this.functions = functions;
 		
 	}
-
+	
 	public List<FunctionG> getFunctions() {
 		return functions;
 	}
-
-	public Vector<Double> xCoordinate;
-    public Vector<Double> yCoordinate;
 	
-	public Axes getAxes() {
-		return axes;
-	}
 	public void drawFunctions()
 	{
 		for(FunctionG f:functions)
@@ -50,19 +56,22 @@ public class Plot extends Pane {
 			drawPath(f.getFunction(),0.01,f.getColor(),Integer.valueOf(f.getStroke()).intValue());
 		}
 	}
+	
+	public void clearFunctions(){
+		functions.clear();
+	}
+	
+	public Axes getAxes() {
+		return axes;
+	}
+	
+	
 	public void setAxes(Axes axes) {
 		this.axes = axes;
 		this.getChildren().setAll(axes);
 		drawFunctions();
 	}
 
-	public Plot(Axes axes){
-		this.functions=new ArrayList<FunctionG>();
-		this.axes=axes;
-		getChildren().setAll(axes);
-		xCoordinate= new Vector<Double>();
-        yCoordinate= new Vector<Double>();
-	}
 	
 	public void addFunction(String f,String color, int stroke)
 	{
@@ -71,9 +80,7 @@ public class Plot extends Pane {
 		if(codRetur==1)functions.add(new FunctionG(f,color,String.valueOf(stroke)));	
 	}
 	
-	public void clearFunctions(){
-		functions.clear();
-	}
+	
 	public int drawPath(String f, double xInc,String color, int stroke)
 	{
 		try{
@@ -90,12 +97,9 @@ public class Plot extends Pane {
 		}
 			
         Path path = new Path();
-        //path.setStroke(Color.Double.parseDouble(color));
         Color c=Color.web(color);
         path.setStroke(c);
-        //path.setStroke(Color.ORANGE.deriveColor(0, 1, 1, 0.6));
         path.setStrokeWidth(stroke);
-
         path.setClip(
                 new Rectangle(
                         0, 0, 
@@ -157,9 +161,10 @@ public class Plot extends Pane {
     
     public void Serealize(File file){
     	try{
-System.out.println(file.getName().toString()+".xml");
-    		System.out.println("Serealizez:"+ this.getFunctions().get(0).getFunction()+" functii");
-			XMLEncoder encoder = new XMLEncoder( new BufferedOutputStream( new FileOutputStream(file.getName().toString()+".xml")));
+    		//System.out.println((file.getName().toString()).substring(0,(file.getName().toString()).lastIndexOf('.'))+".xml");
+    		//System.out.println("Serealizez:"+ this.getFunctions().get(0).getFunction()+" functii");
+    		String fileName=(file.getName().toString()).substring(0,(file.getName().toString()).lastIndexOf('.'))+".xml";
+			XMLEncoder encoder = new XMLEncoder( new BufferedOutputStream( new FileOutputStream(fileName)));
 			encoder.writeObject(this.getFunctions());
 			encoder.close();
 			
@@ -172,13 +177,10 @@ System.out.println(file.getName().toString()+".xml");
     
     public void Deserealize(File file){
     	try{
-    		System.out.println(file.getName().toString()+".xml");
-			XMLDecoder decoder =new XMLDecoder(new BufferedInputStream(new FileInputStream(file.getName().toString()+".xml")));
-			
+    		
+    		String fileName=(file.getName().toString()).substring(0,(file.getName().toString()).lastIndexOf('.'))+".xml";
+    		XMLDecoder decoder =new XMLDecoder(new BufferedInputStream(new FileInputStream(fileName)));
 				List<FunctionG> readObject = (List<FunctionG>)decoder.readObject();
-				System.out.println("Am Deserealizez:"+readObject.get(0).getFunction()+" *********functii");
-				System.out.println("Am Deserealizez:"+readObject.get(0).getStroke()+" *********functii");
-				System.out.println("Am Deserealizez:"+readObject.get(0).getColor()+" *********functii");
 				this.setFunctions(readObject);
 				decoder.close();
 				drawFunctions();
